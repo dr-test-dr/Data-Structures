@@ -14,6 +14,8 @@
   * egg-swagger (RESTful API): 
     > (CRUD其实是数据库基本操作中的Create(创建)、Retrieve(读取)、Update（更新）、Delete（删除）)  
       [swagger 使用](https://www.npmjs.com/package/egg-swagger-doc)  
+      
+  * swagger 中的接口  
       login:  
         POST  /login 用户登录 (userName & password)  
       user:  
