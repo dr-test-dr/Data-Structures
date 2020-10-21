@@ -1,33 +1,34 @@
 ### egg 开发思路：
   * mysql 表设计：
-    user：用户表(id,userName,passWord,avant,roleId)  关联role  多对一
-    role：权限表(id,roleName)
-    note：留言点赞表(id,content,time,userId,shopId,parentId,toCommendId,like) ：
-      userId是用户的id （多对一）。 
-      shopId是对某一个商品的评论。 
-      parentId 为null则是顶级评论，不为空则是对之前id的评论做回复。
-      toCommendId则是回复顶级还是回复顶级下的某一个用户的，当为顶级评论的时候也为null。 
-    category：商品分类表(id,categoryName) 
-    shop: 商品表(id,shopName,price,number,img,description,shopType,categoryId) 关联category 多对一
-    shopDetail: 商品详情表(id,shopID,content,imgList) 关联shop 一对一
+    user：用户表(id,userName,passWord,avant,roleId)  关联role  多对一  
+    role：权限表(id,roleName)  
+    note：留言点赞表(id,content,time,userId,shopId,parentId,toCommendId,like) ：  
+      userId是用户的id （多对一）。   
+      shopId是对某一个商品的评论。   
+      parentId 为null则是顶级评论，不为空则是对之前id的评论做回复。  
+      toCommendId则是回复顶级还是回复顶级下的某一个用户的，当为顶级评论的时候也为null。   
+    category：商品分类表(id,categoryName)   
+    shop: 商品表(id,shopName,price,number,img,description,shopType,categoryId) 关联category 多对一  
+    shopDetail: 商品详情表(id,shopID,content,imgList) 关联shop 一对一  
     
   * egg-swagger (RESTful API): 
-    > (CRUD其实是数据库基本操作中的Create(创建)、Retrieve(读取)、Update（更新）、Delete（删除）)
-      [swagger 使用](https://www.npmjs.com/package/egg-swagger-doc)
-      login:
-        POST  /login 用户登录 (userName & password)
-      user:
-        POST    /api/user       创建用户 (userName & password)
-        GET     /api/user/{id}  获取单个用户 (id)
-        GET     /api/user/all   获取所有用户(分页/模糊) (query:currentPage | pageSize | search | isPaging)
-        PUT     /api/user/add   修改用户 (id & userName & password)
-        DELETE  /api/user/{id}  删除单个用户(id)
-      shop:
-        GET     /api/shop/detail/{shopId} 查询shop
-        GET     /api/shop                 查询所有shop
-        POST    /api/shop                 新增shop
-        PUT     /api/shop/{id}            修改shop
-        DELETE  /api/shop/{id}            删除shop
+    > (CRUD其实是数据库基本操作中的Create(创建)、Retrieve(读取)、Update（更新）、Delete（删除）)  
+      [swagger 使用](https://www.npmjs.com/package/egg-swagger-doc)  
+      login:  
+        POST  /login 用户登录 (userName & password)  
+      user:  
+        POST    /api/user       创建用户 (userName & password)  
+        GET     /api/user/{id}  获取单个用户 (id)  
+        GET     /api/user/all   获取所有用户(分页/模糊) (query:currentPage | pageSize | search | isPaging)  
+        PUT     /api/user/add   修改用户 (id & userName & password)  
+        DELETE  /api/user/{id}  删除单个用户(id)  
+      shop:  
+        GET     /api/shop/detail/{shopId} 查询shop  
+        GET     /api/shop                 查询所有shop  
+        POST    /api/shop                 新增shop  
+        PUT     /api/shop/{id}            修改shop  
+        DELETE  /api/shop/{id}            删除shop  
+        
     ```
       // shop controller
       
