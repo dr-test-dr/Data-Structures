@@ -1,4 +1,4 @@
-### egg 开发思路：
+### egg 开发：
   * mysql 表设计：
     user：用户表(id,userName,passWord,avant,roleId)  关联role  多对一  
     role：权限表(id,roleName)  
@@ -9,7 +9,63 @@
       toCommendId则是回复顶级还是回复顶级下的某一个用户的，当为顶级评论的时候也为null。   
     category：商品分类表(id,categoryName)   
     shop: 商品表(id,shopName,price,number,img,description,shopType,categoryId) 关联category 多对一  
-    shopDetail: 商品详情表(id,shopID,content,imgList) 关联shop 一对一  
+    shopDetail: 商品详情表(id,shopID,content,imgList) 关联shop 一对一 
+  
+  * egg-sequelize (mysql):  
+    > [sequlize 使用](https://www.npmjs.com/package/egg-sequelize)  sequlize是对mysql的一个ORM 对象化操作数据库
+    
+    ```
+     //shop model  包含 一对一、一对多、多对一
+     'use strict';
+     module.exports = app => {
+         const { STRING, INTEGER, BOOLEAN, DATE } = app.Sequelize;
+         const Shop = app.model.define('shops', {
+             id: {
+                 type: INTEGER,
+                 primaryKey: true,
+                 autoIncrement: true
+             },
+             shopName: {
+                 type: STRING,
+                 allowNull: false,
+             },
+             price: {
+                 type: INTEGER,
+                 allowNull: false,
+             },
+             number: {
+                 type: STRING,
+                 allowNull: false,
+             },
+             img: {
+                 type: STRING,
+                 allowNull: true,
+             },
+             description: {
+                 type: STRING,
+                 allowNull: false,
+             },
+             shopType: {
+                 type: INTEGER,
+                 default: 0
+             },
+             categoryId: {
+                 type: INTEGER,
+                 allowNull: false
+             }
+         });
+         //表的关联关系
+         Shop.associate = () => {
+             Shop.belongsTo(app.model.Category, { foreignKey: 'categoryId', constraints: false }); //多对一  外键在多的那个表
+             Shop.hasMany(app.model.Note, { foreignKey: 'shopId', constraints: false });           //一对多
+             Shop.hasOne(app.model.ShopDetaile, { foreignKey: 'shopId', constraints: false });     //一对一
+         }
+
+         // Shop.sync({ force: true })    //强制更新表
+
+         return Shop;
+     };
+    ```
     
   * egg-swagger (RESTful API): 
     > (CRUD其实是数据库基本操作中的Create(创建)、Retrieve(读取)、Update（更新）、Delete（删除）)  
